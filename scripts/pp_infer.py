@@ -129,7 +129,7 @@ if __name__ == '__main__':
     bridge = CvBridge()
 
     # 模型文件路径(最好写绝对路径)
-    model_dir = '/home/nano/workspace/paddle_ros_ws/src/py3_infer/scripts/yolov3_r50vd_dcn_270e_coco/'
+    model_dir = '~/paddle_ros_ws/src/py3_infer/scripts/yolov3_r50vd_dcn_270e_coco/'
     # 从infer_cfg.yml中读出label
     infer_cfg = open(model_dir + 'infer_cfg.yml')
     data = infer_cfg.read()

@@ -1,37 +1,72 @@
 # paddle_inference_ros
+### 介绍
+该功能包可以帮助开发者在ROS中使用Paddle inference部署基于飞桨的CV模型。
+### Description
+This package is in order to helping developers using paddle inference to deploy deep learning CV models bases on paddlepaddle in ROS.
 
-#### 介绍
-该功能包可以在ROS中使用Paddle inference部署基于飞桨的CV模型。
+### Software Architecture
+- paddle_inference_ros(ros package)
+    - scripts
+        - camera.py(camera_node)
+        - pp_infer.py(ppinfer_node)
+        - download_model.sh
 
-#### 软件架构
-软件架构说明
+### Requirements
+- ubuntu 18.04
+- ROS Melodic
+- python3.6.9(with system)
+- paddlepaddle-gpu 2.1.1+ (install [paddle-inference prebulided whl](https://www.paddlepaddle.org.cn/documentation/docs/zh/guides/09_hardware_support/hardware_info_cn.html#paddle-inference) or you can also follow [my blog](https://blog.csdn.net/qq_45779334/article/details/118611953) to install it.)
 
+## Get Start
+### 1.Rebulid cv_bridge based on python3
+```
+$ mkdir -p paddle_ros_ws/src && cd paddle_ros_ws/src
+$ catkin_init_workspace
+$ git clone https://gitee.com/irvingao/vision_opencv.git
+$ cd ../
+$ catkin_make install -DPYTHON_EXECUTABLE=/usr/bin/python3
+```
+```
+$ vim ~/.bashrc
+```
+Add:
+```
+source ~/paddle_ros_ws/devel/setup.bash
+source ~/paddle_ros_ws/install/setup.bash --extend
+```
+Test:
+```
+$ python3
+```
+```
+import cv_bridge
+from cv_bridge.boost.cv_bridge_boost import getCvType
+```
+**The package of cv_bridge has been built successfully if shows as follow:**
+```
+Python 3.6.9 (default, Jan 26 2021, 15:33:00) 
+[GCC 8.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import cv_bridge
+>>> from cv_bridge.boost.cv_bridge_boost import getCvType
+>>> 
+```
 
-#### 安装教程
+### 2.Bulid paddle_inference_ros package
+```
+cd src
+$ git clone https://gitee.com/irvingao/paddle_inference_ros.git
+$ cd paddle_inference_ros/scripts
+$ chmod +x *
+$ cd ../../..
+$ catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
+```
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+### 3.Run Detection
+Run These commands in seperate terminal:
+```
+$ roscore
+$ cd src/paddle_inference_ros/scripts $$ ./download_model.sh
+$ rosrun paddle_inference_ros camera.py
+$ rosrun paddle_inference_ros pp_infer.py
+```

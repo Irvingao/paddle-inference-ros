@@ -10,8 +10,6 @@ This package is in order to helping developers using paddle inference to deploy 
         - pp_infer.py
         - download_model.sh
 
-
-
 ### Requirements
 - ubuntu 18.04
 - ROS Melodic
@@ -35,7 +33,7 @@ Add:
 source ~/paddle_ros_ws/devel/setup.bash
 source ~/paddle_ros_ws/install/setup.bash --extend
 ```
-test:
+Test:
 ```
 $ python3
 ```
